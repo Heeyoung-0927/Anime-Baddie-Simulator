@@ -129,6 +129,19 @@ function MoneyService:GetMoney(userId: number): number
 	return self._playerData[userId] or 0
 end
 
+-- Overwrites the balance outright. No-op if the player's data isn't loaded yet
+-- (so we never create an entry for someone who is mid-load or gone).
+function MoneyService:SetMoney(userId: number, amount: number)
+	if self._playerData[userId] == nil then
+		return
+	end
+	self._playerData[userId] = amount
+	local player = Players:GetPlayerByUserId(userId)
+	if player then
+		updateLeaderstats(player)
+	end
+end
+
 function MoneyService:AddMoney(userId: number, amount: number)
 	if self._playerData[userId] == nil then
 		return

@@ -4,5 +4,7 @@
 -- becomes a child ModuleScript reachable via `script.<Name>`.
 
 local MoneyService = require(script.MoneyService)
+local AdminService = require(script.AdminService)
 
 MoneyService:Init()
+AdminService:Init(MoneyService)
